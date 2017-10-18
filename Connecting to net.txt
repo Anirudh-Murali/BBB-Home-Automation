@@ -1,0 +1,13 @@
+ifconfig usb0 192.168.7.2
+route add default gw 192.168.7.1
+
+
+
+sudo su
+
+ifconfig enxa0f6fd4d023b 192.168.7.1
+iptables --table nat --append POSTROUTING --out-interface enp0s20u1 -j MASQUERADE
+iptables --append FORWARD --in-interface enxa0f6fd4d023b -j ACCEPT
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
